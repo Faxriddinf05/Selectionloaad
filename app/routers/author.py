@@ -11,6 +11,9 @@ author_router = APIRouter(tags=["Author"], prefix='/author')
 @author_router.get('/')
 def get_author(db = Depends(get_db)):
     return db.execute(select(Author).options(selectinload(Author.books))).scalars().all()
+    # or
+    # result = select(Author).options(selectinload(Author.books))
+    # return db.execute(result).scalars().all()
 
 @author_router.post('/')
 def add_author(data: AddAuthor, db = Depends(get_db)):
